@@ -1,0 +1,18 @@
+<section>
+  <div class="page-header">
+    <h1>Actualites</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="actualite in vm.actualites" ui-sref="actualites.view({ actualiteId: actualite._id })" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="actualite.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="actualite.user" ng-bind="actualite.user.displayName"></span>
+        <span ng-if="!actualite.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="actualite.title"></h4>
+      <p class="list-group-item-text" ng-bind="actualite.content"></p>
+    </a>
+  </div>
+</section>
