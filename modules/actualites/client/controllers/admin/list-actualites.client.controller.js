@@ -5,7 +5,7 @@
     .module('actualites.admin')
     .controller('ActualitesAdminListController', ActualitesAdminListController);
 
-    ActualitesAdminListController.$inject = ['ArticlesService'];
+    ActualitesAdminListController.$inject = ['ActualitesService'];
 
   function ActualitesAdminListController(ActualitesService) {
     var vm = this;

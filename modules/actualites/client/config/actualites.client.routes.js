@@ -38,7 +38,7 @@
 
   function getActualite($stateParams, ActualitesService) {
     return ActualitesService.get({
-      actualiteId: $stateParams.articleId
+      actualiteId: $stateParams.actualiteId
     }).$promise;
   }
 }());

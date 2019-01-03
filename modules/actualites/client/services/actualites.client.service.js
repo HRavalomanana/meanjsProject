@@ -9,7 +9,7 @@
 
   function ActualitesService($resource, $log) {
     var Actualite = $resource('/api/actualites/:actualiteId', {
-      articleId: '@_id'
+      actualiteId: '@_id'
     }, {
       update: {
         method: 'PUT'
@@ -18,7 +18,7 @@
 
     angular.extend(Actualite.prototype, {
       createOrUpdate: function () {
-        var article = this;
+        var actualite = this;
         return createOrUpdate(actualite);
       }
     });
@@ -33,7 +33,7 @@
       }
 
       // Handle successful response
-      function onSuccess(article) {
+      function onSuccess(actualite) {
         // Any required internal processing from inside the service, goes here.
       }
 

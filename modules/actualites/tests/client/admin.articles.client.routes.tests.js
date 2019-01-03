@@ -1,10 +1,10 @@
 ﻿(function () {
   'use strict';
 
-  describe('Articles Route Tests', function () {
+  describe('Actualites Route Tests', function () {
     // Initialize global variables
     var $scope,
-      ArticlesService;
+      ActualitesService;
 
     // We can start by loading the main application module
     beforeEach(module(ApplicationConfiguration.applicationModuleName));
@@ -12,21 +12,21 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($rootScope, _ArticlesService_) {
+    beforeEach(inject(function ($rootScope, _ActualitesService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
-      ArticlesService = _ArticlesService_;
+      ActualitesService = _ActualitesService_;
     }));
 
     describe('Route Config', function () {
       describe('Main Route', function () {
         var mainstate;
         beforeEach(inject(function ($state) {
-          mainstate = $state.get('admin.articles');
+          mainstate = $state.get('admin.actualites');
         }));
 
         it('Should have the correct URL', function () {
-          expect(mainstate.url).toEqual('/articles');
+          expect(mainstate.url).toEqual('/actualites');
         });
 
         it('Should be abstract', function () {
@@ -41,7 +41,7 @@
       describe('List Route', function () {
         var liststate;
         beforeEach(inject(function ($state) {
-          liststate = $state.get('admin.articles.list');
+          liststate = $state.get('admin.actualites.list');
         }));
 
         it('Should have the correct URL', function () {
@@ -53,26 +53,26 @@
         });
 
         it('Should have templateUrl', function () {
-          expect(liststate.templateUrl).toBe('/modules/articles/client/views/admin/list-articles.client.view.html');
+          expect(liststate.templateUrl).toBe('/modules/actualites/client/views/admin/list-actualites.client.view.html');
         });
       });
 
       describe('Create Route', function () {
         var createstate,
-          ArticlesAdminController,
-          mockArticle;
+          ActualitesAdminController,
+          mockActualite;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
-          createstate = $state.get('admin.articles.create');
-          $templateCache.put('/modules/articles/client/views/admin/form-article.client.view.html', '');
+          createstate = $state.get('admin.actualites.create');
+          $templateCache.put('/modules/actualites/client/views/admin/form-actualite.client.view.html', '');
 
-          // Create mock article
-          mockArticle = new ArticlesService();
+          // Create mock actualite
+          mockActualite = new ActualitesService();
 
           // Initialize Controller
-          ArticlesAdminController = $controller('ArticlesAdminController as vm', {
+          ActualitesAdminController = $controller('ActualitesAdminController as vm', {
             $scope: $scope,
-            articleResolve: mockArticle
+            actualiteResolve: mockActualite
           });
         }));
 
@@ -82,16 +82,16 @@
 
         it('Should have a resolve function', function () {
           expect(typeof createstate.resolve).toEqual('object');
-          expect(typeof createstate.resolve.articleResolve).toEqual('function');
+          expect(typeof createstate.resolve.actualiteResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
-          expect($state.href(createstate)).toEqual('/admin/articles/create');
+          expect($state.href(createstate)).toEqual('/admin/actualites/create');
         }));
 
-        it('should attach an article to the controller scope', function () {
-          expect($scope.vm.article._id).toBe(mockArticle._id);
-          expect($scope.vm.article._id).toBe(undefined);
+        it('should attach an actualite to the controller scope', function () {
+          expect($scope.vm.actualite._id).toBe(mockActualite._id);
+          expect($scope.vm.actualite._id).toBe(undefined);
         });
 
         it('Should not be abstract', function () {
@@ -99,50 +99,50 @@
         });
 
         it('Should have templateUrl', function () {
-          expect(createstate.templateUrl).toBe('/modules/articles/client/views/admin/form-article.client.view.html');
+          expect(createstate.templateUrl).toBe('/modules/actualites/client/views/admin/form-actualite.client.view.html');
         });
       });
 
       describe('Edit Route', function () {
         var editstate,
-          ArticlesAdminController,
-          mockArticle;
+          ActualitesAdminController,
+          mockActualite;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
-          editstate = $state.get('admin.articles.edit');
-          $templateCache.put('/modules/articles/client/views/admin/form-article.client.view.html', '');
+          editstate = $state.get('admin.actualites.edit');
+          $templateCache.put('/modules/actualites/client/views/admin/form-actualite.client.view.html', '');
 
-          // Create mock article
-          mockArticle = new ArticlesService({
+          // Create mock actualite
+          mockActualite = new ActualitesService({
             _id: '525a8422f6d0f87f0e407a33',
-            title: 'An Article about MEAN',
+            title: 'An Actualite about MEAN',
             content: 'MEAN rocks!'
           });
 
           // Initialize Controller
-          ArticlesAdminController = $controller('ArticlesAdminController as vm', {
+          ActualitesAdminController = $controller('ActualitesAdminController as vm', {
             $scope: $scope,
-            articleResolve: mockArticle
+            actualiteResolve: mockActualite
           });
         }));
 
         it('Should have the correct URL', function () {
-          expect(editstate.url).toEqual('/:articleId/edit');
+          expect(editstate.url).toEqual('/:actualiteId/edit');
         });
 
         it('Should have a resolve function', function () {
           expect(typeof editstate.resolve).toEqual('object');
-          expect(typeof editstate.resolve.articleResolve).toEqual('function');
+          expect(typeof editstate.resolve.actualiteResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
           expect($state.href(editstate, {
-            articleId: 1
-          })).toEqual('/admin/articles/1/edit');
+            actualiteId: 1
+          })).toEqual('/admin/actualites/1/edit');
         }));
 
-        it('should attach an article to the controller scope', function () {
-          expect($scope.vm.article._id).toBe(mockArticle._id);
+        it('should attach an actualite to the controller scope', function () {
+          expect($scope.vm.actualite._id).toBe(mockActualite._id);
         });
 
         it('Should not be abstract', function () {
@@ -150,7 +150,7 @@
         });
 
         it('Should have templateUrl', function () {
-          expect(editstate.templateUrl).toBe('/modules/articles/client/views/admin/form-article.client.view.html');
+          expect(editstate.templateUrl).toBe('/modules/actualites/client/views/admin/form-actualite.client.view.html');
         });
 
         xit('Should go to unauthorized route', function () {

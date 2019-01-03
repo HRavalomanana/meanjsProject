@@ -26,7 +26,7 @@
       }
     }
 
-    // Save Article
+    // Save Actualite
     function save(isValid) {
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.actualiteForm');
@@ -39,7 +39,7 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        $state.go('admin.actualites.list'); // should we send the User to the list or the updated Article's view?
+        $state.go('admin.actualites.list'); // should we send the User to the list or the updated Actualite's view?
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> actualite saved successfully!' });
       }
 

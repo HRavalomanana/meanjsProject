@@ -7,7 +7,7 @@ var actualitesPolicy = require('../policies/actualites.server.policy'),
   actualites = require('../controllers/actualites.server.controller');
 
 module.exports = function (app) {
-  // Articles collection routes
+  // Actualites collection routes
   app.route('/api/actualites').all(actualitesPolicy.isAllowed)
     .get(actualites.list)
     .post(actualites.create);

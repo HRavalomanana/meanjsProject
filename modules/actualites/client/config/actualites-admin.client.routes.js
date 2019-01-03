@@ -32,11 +32,11 @@
           roles: ['admin']
         },
         resolve: {
-          articleResolve: newActualite
+          actualiteResolve: newActualite
         }
       })
       .state('admin.actualites.edit', {
-        url: '/:articleId/edit',
+        url: '/:actualiteId/edit',
         templateUrl: '/modules/actualites/client/views/admin/form-actualite.client.view.html',
         controller: 'ActualitesAdminController',
         controllerAs: 'vm',
@@ -45,16 +45,16 @@
           pageTitle: '{{ actualiteResolve.title }}'
         },
         resolve: {
-          articleResolve: getActualite
+          actualiteResolve: getActualite
         }
       });
   }
 
-  getArticle.$inject = ['$stateParams', 'ActualitesService'];
+  getActualite.$inject = ['$stateParams', 'ActualitesService'];
 
   function getActualite($stateParams, ActualitesService) {
     return ActualitesService.get({
-      articleId: $stateParams.articleId
+      actualiteId: $stateParams.actualiteId
     }).$promise;
   }
 

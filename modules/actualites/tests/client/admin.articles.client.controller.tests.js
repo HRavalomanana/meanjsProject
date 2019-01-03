@@ -1,15 +1,15 @@
 ﻿(function () {
   'use strict';
 
-  describe('Articles Admin Controller Tests', function () {
+  describe('Actualites Admin Controller Tests', function () {
     // Initialize global variables
-    var ArticlesAdminController,
+    var ActualitesAdminController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
-      mockArticle,
+      ActualitesService,
+      mockActualite,
       Notification;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -37,7 +37,7 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_, _Notification_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ActualitesService_, _Notification_) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -45,16 +45,16 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
+      ActualitesService = _ActualitesService_;
       Notification = _Notification_;
 
       // Ignore parent template get on state transitions
       $httpBackend.whenGET('/modules/core/client/views/home.client.view.html').respond(200, '');
 
-      // create mock article
-      mockArticle = new ArticlesService({
+      // create mock actualite
+      mockActualite = new ActualitesService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
+        title: 'An Actualite about MEAN',
         content: 'MEAN rocks!'
       });
 
@@ -63,10 +63,10 @@
         roles: ['user']
       };
 
-      // Initialize the Articles controller.
-      ArticlesAdminController = $controller('ArticlesAdminController as vm', {
+      // Initialize the Actualites controller.
+      ActualitesAdminController = $controller('ActualitesAdminController as vm', {
         $scope: $scope,
-        articleResolve: {}
+        actualiteResolve: {}
       });
 
       // Spy on state go
@@ -76,98 +76,98 @@
     }));
 
     describe('vm.save() as create', function () {
-      var sampleArticlePostData;
+      var sampleActualitePostData;
 
       beforeEach(function () {
-        // Create a sample article object
-        sampleArticlePostData = new ArticlesService({
-          title: 'An Article about MEAN',
+        // Create a sample actualite object
+        sampleActualitePostData = new ActualitesService({
+          title: 'An Actualite about MEAN',
           content: 'MEAN rocks!'
         });
 
-        $scope.vm.article = sampleArticlePostData;
+        $scope.vm.actualite = sampleActualitePostData;
       });
 
-      it('should send a POST request with the form input values and then locate to new object URL', inject(function (ArticlesService) {
+      it('should send a POST request with the form input values and then locate to new object URL', inject(function (ActualitesService) {
         // Set POST response
-        $httpBackend.expectPOST('/api/articles', sampleArticlePostData).respond(mockArticle);
+        $httpBackend.expectPOST('/api/actualites', sampleActualitePostData).respond(mockActualite);
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test Notification success was called
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article saved successfully!' });
-        // Test URL redirection after the article was created
-        expect($state.go).toHaveBeenCalledWith('admin.articles.list');
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Actualite saved successfully!' });
+        // Test URL redirection after the actualite was created
+        expect($state.go).toHaveBeenCalledWith('admin.actualites.list');
       }));
 
       it('should call Notification.error if error', function () {
         var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('/api/articles', sampleArticlePostData).respond(400, {
+        $httpBackend.expectPOST('/api/actualites', sampleActualitePostData).respond(400, {
           message: errorMessage
         });
 
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Article save error!' });
+        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Actualite save error!' });
       });
     });
 
     describe('vm.save() as update', function () {
       beforeEach(function () {
-        // Mock article in $scope
-        $scope.vm.article = mockArticle;
+        // Mock actualite in $scope
+        $scope.vm.actualite = mockActualite;
       });
 
-      it('should update a valid article', inject(function (ArticlesService) {
+      it('should update a valid actualite', inject(function (ActualitesService) {
         // Set PUT response
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond();
+        $httpBackend.expectPUT(/api\/actualites\/([0-9a-fA-F]{24})$/).respond();
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test Notification success was called
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article saved successfully!' });
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Actualite saved successfully!' });
         // Test URL location to new object
-        expect($state.go).toHaveBeenCalledWith('admin.articles.list');
+        expect($state.go).toHaveBeenCalledWith('admin.actualites.list');
       }));
 
-      it('should  call Notification.error if error', inject(function (ArticlesService) {
+      it('should  call Notification.error if error', inject(function (ActualitesService) {
         var errorMessage = 'error';
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond(400, {
+        $httpBackend.expectPUT(/api\/actualites\/([0-9a-fA-F]{24})$/).respond(400, {
           message: errorMessage
         });
 
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Article save error!' });
+        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Actualite save error!' });
       }));
     });
 
     describe('vm.remove()', function () {
       beforeEach(function () {
-        // Setup articles
-        $scope.vm.article = mockArticle;
+        // Setup actualites
+        $scope.vm.actualite = mockActualite;
       });
 
-      it('should delete the article and redirect to articles', function () {
+      it('should delete the actualite and redirect to actualites', function () {
         // Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
 
-        $httpBackend.expectDELETE(/api\/articles\/([0-9a-fA-F]{24})$/).respond(204);
+        $httpBackend.expectDELETE(/api\/actualites\/([0-9a-fA-F]{24})$/).respond(204);
 
         $scope.vm.remove();
         $httpBackend.flush();
 
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article deleted successfully!' });
-        expect($state.go).toHaveBeenCalledWith('admin.articles.list');
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Actualite deleted successfully!' });
+        expect($state.go).toHaveBeenCalledWith('admin.actualites.list');
       });
 
-      it('should should not delete the article and not redirect', function () {
+      it('should should not delete the actualite and not redirect', function () {
         // Return false on confirm message
         spyOn(window, 'confirm').and.returnValue(false);
 
